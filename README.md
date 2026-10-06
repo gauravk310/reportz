@@ -18,6 +18,7 @@ pip install -e .
 
 ### 1. From Python Code
 
+#### System Report
 ```python
 from reportz import SystemReport
 
@@ -49,8 +50,26 @@ print(info.network()) # Hostname & IP
 print(info.uptime())  # Boot time & uptime
 ```
 
+#### Web Analyzer Report
+```python
+from reportz import WebReport
+
+web = WebReport()
+# Save report: save(filename, url, darkmode)
+web.save("web_report.html", "https://example.com", dark_mode=True)
+
+# Or initialize with URL and save:
+web = WebReport("https://example.com")
+web.save("my_report.html", dark_mode=False, open_browser=True)
+
+# Access scan data and summary metrics
+print(web.summary())
+print(web.all())
+```
+
 ### 2. From Command Line (CLI)
 
+#### System Diagnostic Report
 ```bash
 # Generate report in dark mode (default)
 reportz sys -o .
@@ -62,7 +81,18 @@ reportz sys --light -o .
 reportz sys -o
 reportz sys
 reportz sys --light
+```
 
+#### Web Analyzer Report
+```bash
+# Analyze a website and output report in current directory
+reportz web https://example.com . -o
+
+# Light mode report
+reportz web https://example.com . -o --light
+
+# Custom filename or delay
+reportz web https://example.com -f my_site.html --delay 2
 ```
 
 ## Running Tests
